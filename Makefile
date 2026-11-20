@@ -1,6 +1,14 @@
 VENV = venv
-PYTHON = $(VENV)/bin/python
-PIP = $(VENV)/bin/pip
+ifeq ($(OS),Windows_NT)
+	SYS_PYTHON = python
+	PYTHON = $(VENV)\Scripts\python.exe
+else
+	SYS_PYTHON = python3
+	PYTHON = $(VENV)/bin/python
+endif
+
+PIP = $(PYTHON) -m pip
+
 SRC = src
 MAIN = testing.py
 CONFIGFILE = config.json
@@ -14,22 +22,27 @@ run:
 debug:
 	$(PYTHON) -m pdb $(SRC)/$(MAIN) "$(CONFIGFILE)"
 
-install:
-	@if [ ! -d "$(VENV)" ]; then \
-		echo "No virtual environment found, creating '$(VENV)'..."; \
-		python3 -m venv $(VENV); \
-	else \
-		echo "Virtual environment '$(VENV)' found."; \
-	fi
+$(VENV)/pyvenv.cfg:
+	@echo No virtual environment found, creating $(VENV)...
+	$(SYS_PYTHON) -m venv $(VENV)
+
+install: $(VENV)/pyvenv.cfg
 	$(PIP) install --upgrade pip
 	$(PIP) install -r requirements.txt
 
+# WARNING: 'clean' relies on Unix 'find' and does NOT work on Windows
+# (cmd.exe / PowerShell). Use WSL or a Linux machine for this rule.
+# Note: OS=Windows_NT is also set inside Git Bash, so it is blocked there too.
 clean:
-	find . -type d -name "$(VENV)" -prune -o -type d -name "__pycache__" -prune -exec rm -rf {} +
-	find . -type d -name "$(VENV)" -prune -o -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete
-	find . -type d -name "$(VENV)" -prune -o -type d \( -name ".mypy_cache" -o -name ".pytest_cache" -o -name ".ruff_cache" -o -name ".ipynb_checkpoints" \) -prune -exec rm -rf {} +
-	find . -type d -name "$(VENV)" -prune -o -type d -name "*.egg-info" -prune -exec rm -rf {} +
-	rm -rf .tox .nox .coverage htmlcov build dist .hypothesis
+	ifeq ($(OS),Windows_NT)
+		$(error 'make clean' is not supported on Windows because it relies on Unix find. Run it from WSL instead)
+	else
+		find . -type d -name "$(VENV)" -prune -o -type d -name "__pycache__" -prune -exec rm -rf {} +
+		find . -type d -name "$(VENV)" -prune -o -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete
+		find . -type d -name "$(VENV)" -prune -o -type d \( -name ".mypy_cache" -o -name ".pytest_cache" -o -name ".ruff_cache" -o -name ".ipynb_checkpoints" \) -prune -exec rm -rf {} +
+		find . -type d -name "$(VENV)" -prune -o -type d -name "*.egg-info" -prune -exec rm -rf {} +
+		rm -rf .tox .nox .coverage htmlcov build dist .hypothesis
+	endif
 
 lint:
 	-$(VENV)/bin/flake8 . --exclude=$(VENV)
