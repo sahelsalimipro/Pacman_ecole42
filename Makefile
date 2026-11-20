@@ -12,6 +12,7 @@ PIP = $(PYTHON) -m pip
 SRC = src
 MAIN = testing.py
 CONFIGFILE = config.json
+PACKAGE_NAME = pacman
 
 
 .PHONY: install run debug clean lint lint-strict build
@@ -56,4 +57,4 @@ lint-strict:
 build:
 	$(PIP) install --upgrade build
 	$(PYTHON) -m build
-	cp dist/mazegen-*.whl .
+	cp dist/$(PACKAGE_NAME)-*.whl .
