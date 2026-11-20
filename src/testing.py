@@ -1,4 +1,5 @@
 import pygame
+from mazegenerator import MazeGenerator
 
 pygame.init()
 
@@ -21,3 +22,12 @@ while running:
             running = False
 
 pygame.quit()
+
+
+maze = MazeGenerator(
+    size = (15,15),
+    perfect = False,
+    entry_cell = (0, 7),
+    exit_cell = (14, 7),
+    seed = 42
+)
