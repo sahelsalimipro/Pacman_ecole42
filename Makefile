@@ -33,6 +33,7 @@ $(VENV)/pyvenv.cfg:
 
 install: $(VENV)/pyvenv.cfg
 	$(PIP) install --upgrade pip
+	$(PIP) install mazegenerator/mazegenerator-2.1.0-py3-none-any.whl
 	$(PIP) install -r requirements.txt
 
 # Next unfinished task from PLANNING.md (stdlib only, no venv needed)
