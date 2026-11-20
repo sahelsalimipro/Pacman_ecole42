@@ -43,24 +43,30 @@ next:
 # (cmd.exe / PowerShell). Use WSL or a Linux machine for this rule.
 # Note: OS=Windows_NT is also set inside Git Bash, so it is blocked there too.
 clean:
-ifeq ($(OS),Windows_NT)
-	$(error 'make clean' is not supported on Windows because it relies on Unix find. Run it from WSL instead)
-else
-	find . -type d -name "$(VENV)" -prune -o -type d -name "__pycache__" -prune -exec rm -rf {} +
-	find . -type d -name "$(VENV)" -prune -o -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete
-	find . -type d -name "$(VENV)" -prune -o -type d \( -name ".mypy_cache" -o -name ".pytest_cache" -o -name ".ruff_cache" -o -name ".ipynb_checkpoints" \) -prune -exec rm -rf {} +
-	find . -type d -name "$(VENV)" -prune -o -type d -name "*.egg-info" -prune -exec rm -rf {} +
-	rm -rf .tox .nox .coverage htmlcov build dist .hypothesis
-endif
+	ifeq ($(OS),Windows_NT)
+		$(error 'make $@' is not supported on Windows because it relies on Unix find. Run it from WSL instead)
+	else
+		find . -type d -name "$(VENV)" -prune -o -type d -name "__pycache__" -prune -exec rm -rf {} +
+		find . -type d -name "$(VENV)" -prune -o -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete
+		find . -type d -name "$(VENV)" -prune -o -type d \( -name ".mypy_cache" -o -name ".pytest_cache" -o -name ".ruff_cache" -o -name ".ipynb_checkpoints" \) -prune -exec rm -rf {} +
+		find . -type d -name "$(VENV)" -prune -o -type d -name "*.egg-info" -prune -exec rm -rf {} +
+		rm -rf .tox .nox .coverage htmlcov build dist .hypothesis
+	endif
 
 lint:
-	-$(VENV)/bin/flake8 . --exclude=$(VENV)
-	$(VENV)/bin/mypy . --exclude '$(VENV)/' --warn-return-any --warn-unused-ignores \
-		--ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
+	ifeq ($(OS),Windows_NT)
+		$(error 'make $@' is not supported on Windows because it relies on Unix find. Run it from WSL instead)
+	else
+		-$(VENV)/bin/flake8 . --exclude=$(VENV)
+		$(VENV)/bin/mypy . --exclude '$(VENV)/' --warn-return-any --warn-unused-ignores \
+			--ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
 
 lint-strict:
-	-$(VENV)/bin/flake8 . --exclude=$(VENV)
-	$(VENV)/bin/mypy . --exclude '$(VENV)/' --strict
+	ifeq ($(OS),Windows_NT)
+		$(error 'make $@' is not supported on Windows because it relies on Unix find. Run it from WSL instead)
+	else
+		-$(VENV)/bin/flake8 . --exclude=$(VENV)
+		$(VENV)/bin/mypy . --exclude '$(VENV)/' --strict
 
 build:
 	$(PIP) install --upgrade build
