@@ -122,8 +122,8 @@ Status: ⬜ not started · 🟦 in progress · ✅ done · ⚠️ late · ❌ bl
 | ID | Owner | Planned end | Actual end | Status | Δ (h) | Notes / blockers |
 |----|:-----:|:-----------:|:----------:|:------:|:-----:|------------------|
 | X1 | A | Fri 20/11 17:00 | Fri 20/11 14:00 | ✅ | | |
-| C1 | B | Fri 20/11 18:00 | TODO | ⬜ | | |
-| S1 | B | Mon 23/11 11:00 | TODO | ⬜ | | |
+| C1 | B | Fri 20/11 18:00 | Mon 23/11 17:00 | ✅ | | |
+| S1 | B | Mon 23/11 11:00 | TODO | ✅ | | |
 | Ga | A | Mon 23/11 13:00 | TODO | ⬜ | | |
 | G0 | A | Mon 23/11 14:00 | TODO | ⬜ | | |
 | Gb | B | Mon 23/11 17:00 | TODO | ⬜ | | |
