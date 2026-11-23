@@ -54,4 +54,5 @@ makes the package crash.
 
 
 ### Resources:
-- https://www.geeksforgeeks.org/python/pygame-tutorial/
+- **Package Management**: https://packaging.python.org/en/latest/tutorials/installing-packages/
+- **Pygame**: https://www.geeksforgeeks.org/python/pygame-tutorial/
