@@ -51,3 +51,8 @@ makes the package crash.
 - **File missing, unreadable, invalid JSON, or not a JSON object**:
   the game prints a clear error (with line and column for JSON errors)
   and exits. It never shows a Python traceback.
+
+
+### Resources:
+- **Package Management**: https://packaging.python.org/en/latest/tutorials/installing-packages/
+- **Pygame**: https://www.geeksforgeeks.org/python/pygame-tutorial/

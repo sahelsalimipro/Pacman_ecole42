@@ -10,7 +10,7 @@ endif
 PIP = $(PYTHON) -m pip
 
 SRC = src
-MAIN = testing.py
+MAIN = pac-man.py
 CONFIGFILE = config.json
 PACKAGE_NAME = pacman
 
@@ -21,10 +21,10 @@ WHO ?=
 .PHONY: install run debug clean lint lint-strict build next
 
 run:
-	$(PYTHON) $(SRC)/$(MAIN) "$(CONFIGFILE)"
+	$(PYTHON) $(MAIN) "$(CONFIGFILE)"
 
 debug:
-	$(PYTHON) -m pdb $(SRC)/$(MAIN) "$(CONFIGFILE)"
+	$(PYTHON) -m pdb $(MAIN) "$(CONFIGFILE)"
 
 # Real file target (NOT phony): make only creates the venv if it is missing
 $(VENV)/pyvenv.cfg:
