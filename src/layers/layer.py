@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from pygame import Event
+from pygame import Event, Surface
 
 class Layer(ABC):
 
@@ -10,4 +10,8 @@ class Layer(ABC):
 
     @abstractmethod
     def update(self, dt: float) -> None:
+        ...
+
+    @abstractmethod
+    def render(self, screen: Surface) -> None:
         ...

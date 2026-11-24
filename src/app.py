@@ -34,6 +34,8 @@ class App:
             for lay in self.layers:
                 lay.update(dt)
 
-            # TODO render
+            # Render
+            for lay in sef.layers:
+                lay.render(window)
 
             pygame.display.flip()
