@@ -1,5 +1,8 @@
+from pygame import Event
+
 from .layer import Layer
 
 
 class PauseMenu(Layer):
-    pass
+    def handle_event(self, e: Event) -> None:
+        pass

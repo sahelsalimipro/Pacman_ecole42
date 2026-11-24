@@ -18,16 +18,15 @@ class App:
         window = pygame.display.set_mode()
         dt = self.clock.tick(FPS)
 
-        while self._run():
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    break
-
-
-
+        self._run(window, dt)
 
         pygame.quit()
 
-    def _run(self) -> bool:
-        pygame.display.flip()
-        return True
+    def _run(self, window: pygame.Surface, dt: float) -> None:
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return
+                elif self.layers:
+                    self.layers[-1].handle_event(event)
+            pygame.display.flip()
