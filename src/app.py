@@ -6,9 +6,10 @@ FPS: float = 60
 
 class App:
 
-    def __init__(self) -> None:
+    def __init__(self, screen_size: tuple[int, int]) -> None:
         self.layers: list[Layer] = [StartMenu()]
         self.clock = pygame.Clock()
+        self.screen_size = screen_size
         return
 
 
@@ -16,14 +17,15 @@ class App:
         pygame.init()
 
         window = pygame.display.set_mode()
-        dt = self.clock.tick(FPS)
 
-        self._run(window, dt)
+        self._run(window)
 
         pygame.quit()
 
-    def _run(self, window: pygame.Surface, dt: float) -> None:
+    def _run(self, window: pygame.Surface) -> None:
+        dt = self.clock.tick(FPS)
         while True:
+            dt = self.clock.tick(FPS)
             # Events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

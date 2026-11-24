@@ -1,15 +1,21 @@
-from abc import ABC, abstractmethod
-from pygame import Event, Surface
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from abc import ABC, abstractmethod
+    from pygame import Event, Surface
+    from app import App
+
 
 class Layer(ABC):
 
 
     @abstractmethod
-    def handle_event(self, e: Event) -> None:
+    def handle_event(self, e: Event, app: App) -> None:
         ...
 
     @abstractmethod
-    def update(self, dt: float) -> None:
+    def update(self, dt: float, app: App) -> None:
         ...
 
     @abstractmethod
