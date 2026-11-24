@@ -11,6 +11,9 @@ class App:
     clock: pygame.Clock
 
     def __init__(self, screen_size: tuple[int, int]) -> None:
+        pygame.init()
+
+        self._player_name = ""
         self.layers: list[Layer] = [StartMenu(screen_size)]
         self.clock = pygame.Clock()
         self.screen_size = screen_size
@@ -19,6 +22,7 @@ class App:
     @property
     def player_name(self) -> str:
         return self._player_name
+
     @player_name.setter
     def player_name(self, new: str) -> str:
         try:
@@ -30,10 +34,9 @@ class App:
             ...
         return self._player_name
 
-    def launch(self) -> None:
-        pygame.init()
 
-        window = pygame.display.set_mode()
+    def launch(self) -> None:
+        window = pygame.display.set_mode(self.screen_size)
 
         self._run(window)
 
