@@ -1,6 +1,6 @@
 import pygame
 
-from layers import Layer, StartMenu
+from .layers import Layer, StartMenu
 
 FPS: float = 60
 
@@ -24,9 +24,16 @@ class App:
 
     def _run(self, window: pygame.Surface, dt: float) -> None:
         while True:
+            # Events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return
                 elif self.layers:
                     self.layers[-1].handle_event(event)
+            # Updates
+            for lay in self.layers:
+                lay.update(dt)
+
+            # TODO render
+
             pygame.display.flip()

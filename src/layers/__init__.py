@@ -5,6 +5,7 @@ from .pause_menu import PauseMenu
 from .end_menu import EndMenu
 
 __all__= [
+    "Layer",
     "Game",
     "StartMenu",
     "PauseMenu",

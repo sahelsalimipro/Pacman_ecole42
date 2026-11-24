@@ -7,3 +7,7 @@ class Layer(ABC):
     @abstractmethod
     def handle_event(self, e: Event) -> None:
         ...
+
+    @abstractmethod
+    def update(self, dt: float) -> None:
+        ...
