@@ -6,13 +6,25 @@ from pygame import Event, Surface, Rect, font
 
 from .layer import Layer
 from .buttons import Button
+from .game import Game
 
 if TYPE_CHECKING:
     from app import App
 
 
-def _fake_func() -> None:
-    return
+def _play(app: App) -> None:
+    # Replace the start menu with the game layer
+    app.layers = [Game(app, app.screen_size)]
+
+
+def _view_scores(app: App) -> None:
+    # TODO: app.layers.append(ScoresMenu(app, app.screen_size))
+    print("TODO: scores screen")
+
+
+def _quit(app: App) -> None:
+    # Same exit path as closing the window: App._run returns on QUIT
+    pygame.event.post(pygame.event.Event(pygame.QUIT))
 
 
 class StartMenu(Layer):
@@ -39,9 +51,9 @@ class StartMenu(Layer):
         self.input_rect.center = (cx, h // 2 - 100)
 
         specs = [
-            ("Play", _fake_func, self._has_name),
-            ("View scores", _fake_func, lambda: True),
-            ("Quit", _fake_func, lambda: True),
+            ("Play", _play, self._has_name),
+            ("View scores", _view_scores, lambda: True),
+            ("Quit", _quit, lambda: True),
         ]
         y = self.input_rect.bottom + 40
         self.buttons: list[Button] = []
