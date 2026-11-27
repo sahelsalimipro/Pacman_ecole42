@@ -27,6 +27,8 @@ LAVENDER: Color = (140, 140, 220)
 
 GOLD: Color = (255, 215, 0)
 RED: Color = (200, 0, 0)
+ROYAL_BLUE: Color = (40, 60, 220)
+DEEP_BLUE: Color = (25, 30, 110)
 
 # --- Roles: menus --------------------------------------------------------
 MENU_BG = NAVY
@@ -52,4 +54,10 @@ SCORE_ROW = LIGHT_GREY
 
 # --- Roles: game ---------------------------------------------------------
 GAME_TOPBAR = BLACK
-GAME_BG = RED
+GAME_BG = BLACK              # around the maze
+HUD_TEXT = WHITE             # level name in the top bar
+
+# --- Roles: maze ---------------------------------------------------------
+MAZE_BG = BLACK              # the corridors
+WALL = ROYAL_BLUE
+MAZE_BLOCK = DEEP_BLUE       # the solid '42' cells
