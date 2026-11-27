@@ -1,6 +1,7 @@
 import pygame
 
-from .layers import Layer, StartMenu
+# from .layers import Layer, StartMenu
+from .layers import Layer, Game
 
 FPS: float = 60
 
@@ -14,7 +15,8 @@ class App:
         pygame.init()
 
         self._player_name = ""
-        self.layers: list[Layer] = [StartMenu(screen_size)]
+        # self.layers: list[Layer] = [StartMenu(screen_size)]
+        self.layers: list[Layer] = [Game(screen_size)]
         self.clock = pygame.Clock()
         self.screen_size = screen_size
         return

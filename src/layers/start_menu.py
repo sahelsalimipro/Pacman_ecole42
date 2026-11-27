@@ -76,6 +76,7 @@ class StartMenu(Layer):
 
     def update(self, dt: float, app: App) -> None:
         self.cursor_timer = (self.cursor_timer + dt) % 1.0
+        return
 
     def render(self, screen: Surface) -> None:
         screen.fill(self.BG)
