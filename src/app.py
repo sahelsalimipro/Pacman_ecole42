@@ -1,29 +1,51 @@
 import pygame
 
-from .layers import Layer, StartMenu
+# from .layers import Layer, StartMenu
+from .layers import Layer, Game
 
 FPS: float = 60
 
 
 class App:
 
+    _player_name: str
+    layers: list[Layer]
+    clock: pygame.Clock
+
     def __init__(self, screen_size: tuple[int, int]) -> None:
-        self.layers: list[Layer] = [StartMenu()]
+        pygame.init()
+
+        self._player_name = ""
+        # self.layers: list[Layer] = [StartMenu(screen_size)]
+        self.layers: list[Layer] = [Game(screen_size)]
         self.clock = pygame.Clock()
         self.screen_size = screen_size
         return
 
-    def launch(self) -> None:
-        pygame.init()
+    @property
+    def player_name(self) -> str:
+        return self._player_name
 
-        window = pygame.display.set_mode()
+    @player_name.setter
+    def player_name(self, new: str) -> str:
+        try:
+            new = new.strip()
+            if not new.isalnum():
+                raise ValueError("Invalid characters in player name")
+            self._player_name = new
+        except ValueError, AttributeError:
+            ...
+        return self._player_name
+
+    def launch(self) -> None:
+        window = pygame.display.set_mode(self.screen_size)
 
         self._run(window)
 
         pygame.quit()
 
     def _run(self, window: pygame.Surface) -> None:
-        dt = self.clock.tick(FPS)
+        dt = self.clock.tick(FPS)  # needed ?
         while True:
             dt = self.clock.tick(FPS)
             # Events
@@ -31,10 +53,10 @@ class App:
                 if event.type == pygame.QUIT:
                     return
                 elif self.layers:
-                    self.layers[-1].handle_event(event)
+                    self.layers[-1].handle_event(event, self)
             # Updates
             for lay in self.layers:
-                lay.update(dt)
+                lay.update(dt, self)
 
             # Render
             for lay in self.layers:
