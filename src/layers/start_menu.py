@@ -21,7 +21,8 @@ def _play(app: App) -> None:
 
 def _view_scores(app: App) -> None:
     # Push on top: the start menu stays underneath, "Back" pops it
-    app.layers.append(ScoresMenu(app, app.screen_size))
+    app.layers.append(ScoresMenu(app, app.screen_size,
+                                 app.config.highscore_filename))
 
 
 def _quit(app: App) -> None:
