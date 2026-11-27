@@ -8,7 +8,9 @@ if TYPE_CHECKING:
 
 
 class Layer(ABC):
-
+    def __init__(self, app: "App") -> None:
+        self.app = app
+    ...
 
     @abstractmethod
     def handle_event(self, e: Event, app: App) -> None:

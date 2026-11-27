@@ -4,6 +4,7 @@ from .layers import Layer, StartMenu
 
 FPS: float = 60
 
+
 class App:
 
     def __init__(self, screen_size: tuple[int, int]) -> None:
@@ -11,7 +12,6 @@ class App:
         self.clock = pygame.Clock()
         self.screen_size = screen_size
         return
-
 
     def launch(self) -> None:
         pygame.init()
@@ -37,7 +37,7 @@ class App:
                 lay.update(dt)
 
             # Render
-            for lay in sef.layers:
+            for lay in self.layers:
                 lay.render(window)
 
             pygame.display.flip()
