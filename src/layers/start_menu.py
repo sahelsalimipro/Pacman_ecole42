@@ -22,7 +22,7 @@ class StartMenu(Layer):
     MAX_NAME_LEN = 16
     BG = (30, 30, 40)
 
-    def __init__(self, screen_size: tuple[int, int]) -> None:
+    def __init__(self, app: App, screen_size: tuple[int, int]) -> None:
         self.font = font.Font(None, 40)
         self.title_font = font.Font(None, 72)
 
@@ -51,6 +51,7 @@ class StartMenu(Layer):
             y += self.BTN_SIZE[1] + self.BTN_GAP
 
         self.play_button = self.buttons[0]
+        return super().__init__(app)
 
     def _has_name(self) -> bool:
         return bool(self.name.strip())

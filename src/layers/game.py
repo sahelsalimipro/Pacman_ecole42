@@ -14,7 +14,7 @@ class Game(Layer):
     # ghosts: list[Ghosts]
     # lvls: list[Levels]
 
-    def __init__(self, screen_size: tuple[int, int]) -> None:
+    def __init__(self, app: App, screen_size: tuple[int, int]) -> None:
 
         # Game rules
         self.score = 0  # tracked accross levels
@@ -33,7 +33,7 @@ class Game(Layer):
         self.topbar = topbar
         self.main_area = main_area
 
-        return
+        return super().__init__(app)
 
     def handle_event(self, e: Event, app: App) -> None:
         pass
