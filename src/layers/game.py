@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from pygame import Event, Surface, Rect, draw
 
 from .layer import Layer
-from ..colors import Color as c
+from .. import colors as c
 from ..level import Level
 
 if TYPE_CHECKING:
