@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from pygame import Event, Surface, Rect, draw
 
 from .layer import Layer
+from ..level import Level
 
 if TYPE_CHECKING:
     from app import App
@@ -12,14 +13,24 @@ class Game(Layer):
 
     score: int
     # ghosts: list[Ghosts]
-    # lvls: list[Levels]
+    lvls: list[Level]
 
     def __init__(self, app: App, screen_size: tuple[int, int]) -> None:
 
         # Game rules
         self.score = 0  # tracked accross levels
+        self.lvls = [  # curr lvl is lvls[-1]
+            Level(
+                l.name,
+                l.seed,
+                l.ghosts,
+                l.width,
+                l.height,
+                l.ghost_speed
+            )
+            for l in app.config.levels
+        ]
         self.ghosts = []
-        self.lvls = []  # curr lvl is lvls[-1]
 
         # Rendering
         w, h = screen_size
@@ -44,3 +55,9 @@ class Game(Layer):
     def render(self, screen: Surface) -> None:
         draw.rect(screen, (0, 0, 0), self.topbar)
         draw.rect(screen, (200, 0, 0), self.main_area)
+
+    def _nxt_level(self) -> None:
+        pass  # TODO
+
+    def _win(self) -> None:
+        pass  # TODO
