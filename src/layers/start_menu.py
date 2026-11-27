@@ -7,6 +7,7 @@ from pygame import Event, Surface, Rect, font
 from .layer import Layer
 from .buttons import Button
 from .game import Game
+from .scores_menu import ScoresMenu
 
 if TYPE_CHECKING:
     from app import App
@@ -18,8 +19,8 @@ def _play(app: App) -> None:
 
 
 def _view_scores(app: App) -> None:
-    # TODO: app.layers.append(ScoresMenu(app, app.screen_size))
-    print("TODO: scores screen")
+    # Push on top: the start menu stays underneath, "Back" pops it
+    app.layers.append(ScoresMenu(app, app.screen_size))
 
 
 def _quit(app: App) -> None:
