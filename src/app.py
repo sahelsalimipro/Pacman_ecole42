@@ -45,7 +45,6 @@ class App:
         pygame.quit()
 
     def _run(self, window: pygame.Surface) -> None:
-        dt = self.clock.tick(FPS)  # needed ?
         while True:
             dt = self.clock.tick(FPS)
             # Events
