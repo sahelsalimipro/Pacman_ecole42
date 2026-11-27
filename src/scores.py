@@ -1,14 +1,16 @@
-"""Read the high score file.
+"""Read and write the high score file.
 
 File format (JSON list):
     [{"name": "Alice", "score": 1200}, {"name": "Bob", "score": 800}]
 
 A missing, unreadable or malformed file never crashes the game:
 it just means "no scores yet". Bad entries are skipped.
+A failed write is logged and the game goes on.
 """
 
 import json
 import logging
+import os
 
 log = logging.getLogger("scores")
 
@@ -43,3 +45,36 @@ def load_scores(path: str) -> list[tuple[str, int]]:
 
     scores.sort(key=lambda s: s[1], reverse=True)
     return scores[:MAX_SCORES]
+
+
+def is_high_score(path: str, score: int) -> bool:
+    """True if ``score`` would enter the top list (ask for a name only then)."""
+    scores = load_scores(path)
+    return len(scores) < MAX_SCORES or score > scores[-1][1]
+
+
+def save_score(path: str, name: str, score: int) -> bool:
+    """Add a score, keep the best MAX_SCORES, write the file.
+
+    Returns True if the score made it into the saved list.
+    On a tie, the older score stays ahead of the new one.
+    """
+    scores = load_scores(path)
+    scores.append((name, score))
+    scores.sort(key=lambda s: s[1], reverse=True)  # stable: ties keep order
+    scores = scores[:MAX_SCORES]
+    if (name, score) not in scores:
+        return False
+
+    data = [{"name": n, "score": s} for n, s in scores]
+    # Write to a temporary file, then swap it in: if the game crashes
+    # mid-write, the old file is still intact.
+    tmp = path + ".tmp"
+    try:
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+        os.replace(tmp, path)
+    except OSError as err:
+        log.warning("cannot save scores to %s: %s", path, err)
+        return False
+    return True
