@@ -1,6 +1,7 @@
 import pygame
 
 # from .layers import Layer, StartMenu
+from .config import load_config, GameConfig
 from .layers import Layer, Game
 
 FPS: float = 60
@@ -8,11 +9,14 @@ FPS: float = 60
 
 class App:
 
+    config: GameConfig
     _player_name: str
     layers: list[Layer]
     clock: pygame.Clock
 
-    def __init__(self, screen_size: tuple[int, int]) -> None:
+    def __init__(self, config_file: str, screen_size: tuple[int, int]) -> None:
+
+        self.config = load_config(config_file)
         pygame.init()
 
         self._player_name = ""
