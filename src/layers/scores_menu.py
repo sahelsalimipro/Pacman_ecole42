@@ -7,6 +7,7 @@ from pygame import Event, Surface, font
 from .layer import Layer
 from .buttons import Button
 from ..scores import load_scores
+from .. import colors as c
 
 if TYPE_CHECKING:
     from app import App
@@ -20,7 +21,7 @@ def _back(app: App) -> None:
 class ScoresMenu(Layer):
     BTN_SIZE = (260, 60)
     ROW_H = 36
-    BG = (30, 30, 40)
+    BG = c.MENU_BG
 
     def __init__(self, app: App, screen_size: tuple[int, int],
                  filename: str = "highscores.json") -> None:
@@ -52,11 +53,11 @@ class ScoresMenu(Layer):
     def render(self, screen: Surface) -> None:
         screen.fill(self.BG)
 
-        title = self.title_font.render("High scores", True, (255, 255, 255))
+        title = self.title_font.render("High scores", True, c.TITLE)
         screen.blit(title, title.get_rect(center=self.title_pos))
 
         if not self.scores:
-            text = self.font.render("No scores yet", True, (110, 110, 130))
+            text = self.font.render("No scores yet", True, c.TEXT_MUTED)
             screen.blit(text, text.get_rect(
                 center=(self.cx, self.table_top + 60)))
         else:
@@ -64,7 +65,7 @@ class ScoresMenu(Layer):
             rank_x, name_x, score_x = self.cx - 170, self.cx - 140, self.cx + 190
             for i, (name, score) in enumerate(self.scores):
                 y = self.table_top + i * self.ROW_H
-                color = (255, 215, 0) if i == 0 else (230, 230, 230)
+                color = c.SCORE_FIRST if i == 0 else c.SCORE_ROW
                 rank = self.font.render(f"{i + 1}.", True, color)
                 screen.blit(rank, rank.get_rect(topright=(rank_x, y)))
                 screen.blit(self.font.render(name, True, color), (name_x, y))

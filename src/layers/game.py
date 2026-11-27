@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from pygame import Event, Surface, Rect, draw
 
 from .layer import Layer
+from .. import colors as c
 
 if TYPE_CHECKING:
     from app import App
@@ -42,5 +43,5 @@ class Game(Layer):
         pass
 
     def render(self, screen: Surface) -> None:
-        draw.rect(screen, (0, 0, 0), self.topbar)
-        draw.rect(screen, (200, 0, 0), self.main_area)
+        draw.rect(screen, c.GAME_TOPBAR, self.topbar)
+        draw.rect(screen, c.GAME_BG, self.main_area)

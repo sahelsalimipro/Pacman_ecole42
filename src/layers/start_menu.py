@@ -8,6 +8,7 @@ from .layer import Layer
 from .buttons import Button
 from .game import Game
 from .scores_menu import ScoresMenu
+from .. import colors as c
 
 if TYPE_CHECKING:
     from app import App
@@ -33,7 +34,7 @@ class StartMenu(Layer):
     BTN_GAP = 20
     INPUT_SIZE = (260, 50)
     MAX_NAME_LEN = 16
-    BG = (30, 30, 40)
+    BG = c.MENU_BG
 
     def __init__(self, app: App, screen_size: tuple[int, int]) -> None:
         self.font = font.Font(None, 40)
@@ -98,11 +99,11 @@ class StartMenu(Layer):
     def render(self, screen: Surface) -> None:
         screen.fill(self.BG)
 
-        title = self.title_font.render("My Game", True, (255, 255, 255))
+        title = self.title_font.render("My Game", True, c.TITLE)
         screen.blit(title, title.get_rect(center=self.title_pos))
 
-        border = (140, 140, 220) if self.input_active else (90, 90, 120)
-        pygame.draw.rect(screen, (20, 20, 28),
+        border = c.INPUT_BORDER_ACTIVE if self.input_active else c.INPUT_BORDER
+        pygame.draw.rect(screen, c.INPUT_BG,
                          self.input_rect, border_radius=8)
         pygame.draw.rect(screen, border, self.input_rect,
                          width=2, border_radius=8)
@@ -110,9 +111,9 @@ class StartMenu(Layer):
         if self.name or self.input_active:
             shown = self.name + \
                 ("|" if self.input_active and self.cursor_timer < 0.5 else "")
-            text = self.font.render(shown, True, (255, 255, 255))
+            text = self.font.render(shown, True, c.TEXT)
         else:
-            text = self.font.render("Enter your name", True, (110, 110, 130))
+            text = self.font.render("Enter your name", True, c.TEXT_MUTED)
         screen.blit(text, text.get_rect(
             midleft=(self.input_rect.x + 12, self.input_rect.centery)))
 

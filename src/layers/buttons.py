@@ -5,6 +5,8 @@ import pygame
 from pygame import Rect, Surface
 from pygame.font import Font
 
+from .. import colors as c
+
 if TYPE_CHECKING:
     from app import App
 
@@ -30,10 +32,10 @@ class Button:
 
     def render(self, screen: Surface, font: Font, mouse: tuple[int, int]) -> None:
         if not self.enabled():
-            color, fg = (45, 45, 60), (110, 110, 130)
+            color, fg = c.BUTTON_DISABLED, c.BUTTON_DISABLED_TEXT
         else:
-            color = (90, 90, 140) if self.rect.collidepoint(mouse) else (60, 60, 100)
-            fg = (255, 255, 255)
+            color = c.BUTTON_HOVER if self.rect.collidepoint(mouse) else c.BUTTON
+            fg = c.BUTTON_TEXT
         pygame.draw.rect(screen, color, self.rect, border_radius=10)
         text = font.render(self.label, True, fg)
         screen.blit(text, text.get_rect(center=self.rect.center))
